@@ -1,0 +1,17 @@
+  ~\AppData\Local\nvim
+    lua
+   │  plugins
+   │ │  LSP-Config.lua
+   │ │  autocomplete.lua
+   │ │  catppuccin.lua
+   │ │  devicons.lua
+   │ │  gitsigns.lua
+   │ │  lualine.lua
+   │ │  mason.lua
+   │ │  neotree.lua
+   │ │  null-ls.lua
+   │ │  telescope.lua
+   │ └  treesitter.lua
+   └  plugins.lua
+    init.lua
+    lazy-lock.json
