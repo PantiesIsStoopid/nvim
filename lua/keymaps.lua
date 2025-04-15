@@ -1,5 +1,3 @@
-vim.keymap.set("n", "<leader>rn", ":set relativenumber!<CR>")
-
 -- Open vertical split with :vsp or <leader>vs
 vim.api.nvim_set_keymap("n", "<leader>vs", ":vsplit<CR>", { noremap = true })
 
