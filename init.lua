@@ -35,3 +35,4 @@ vim.cmd("highlight CursorLineNr guifg=#f5e0dc gui=bold") -- Catppuccin Latte Ros
 require("lazy").setup("plugins")
 require("keymaps")     -- This loads the keymaps.lua file
 require("diagnostics") -- This loads the diagnostics.lua file
+require("autoupdate").AutoUpdate() -- This loads the autoupdate.lua file
