@@ -24,7 +24,7 @@ return {
 					"cssls",
 					"denols",
 					"eslint",
-				},
+		 	},
 				automatic_installation = true,
 			})
 		end,
