@@ -3,6 +3,10 @@ vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
 vim.cmd("set autoindent")
+vim.opt.shell = "pwsh"
+vim.opt.shellcmdflag = '-NoLogo -ExecutionPolicy Bypass -Command ". $PROFILE; "'
+
+
 vim.opt.numberwidth = 1
 
 -- Bootstrap lazy.nvim
