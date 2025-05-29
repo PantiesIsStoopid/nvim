@@ -6,11 +6,6 @@ vim.cmd("set autoindent")
 vim.opt.shell = "pwsh"
 vim.opt.shellcmdflag = '-NoLogo -ExecutionPolicy Bypass -Command ". $PROFILE; "'
 
-vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave" }, {
-	pattern = "*",
-	command = "silent! wall",
-})
-
 vim.opt.numberwidth = 1
 
 -- Bootstrap lazy.nvim
@@ -42,5 +37,3 @@ vim.cmd("highlight CursorLineNr guifg=#f5e0dc gui=bold") -- Catppuccin Latte Ros
 -- Setup lazy.nvim
 require("lazy").setup("plugins")
 require("keymaps") -- This loads the keymaps.lua file
-require("diagnostics") -- This loads the diagnostics.lua file
-require("autoupdate").AutoUpdate() -- This loads the autoupdate.lua file
