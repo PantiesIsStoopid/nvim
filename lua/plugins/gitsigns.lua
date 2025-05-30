@@ -1,4 +1,5 @@
-return {  {
+return {
+  {
     "lewis6991/gitsigns.nvim",
     config = function()
       require("gitsigns").setup({
@@ -18,18 +19,19 @@ return {  {
           changedelete = { text = '~' },
           untracked = { text = '┆' }
         },
-        on_attach = function(bufnr)
-          local gitsigns = require("gitsigns")
-          local function map(mode, lhs, rhs, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, lhs, rhs, opts)
+        on_attach = function(Bufnr)
+          local Gitsigns = require("gitsigns")
+          local function Map(Mode, Lhs, Rhs, Opts)
+            Opts = Opts or {}
+            Opts.buffer = Bufnr
+            vim.keymap.set(Mode, Lhs, Rhs, Opts) 
           end
-          map('n', '<C-g>', function()
-            gitsigns.toggle_current_line_blame()
-          end)
+          Map('n', '<leader>gb', function()
+            Gitsigns.toggle_current_line_blame()
+          end, { desc = "Toggle current line git blame" })
         end
       })
     end
   },
 }
+
