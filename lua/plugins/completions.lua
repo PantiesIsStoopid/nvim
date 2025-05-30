@@ -1,6 +1,6 @@
 return {
   {
-    "hrsh7th/cmp-nvim-lsp"
+    "hrsh7th/cmp-nvim-lsp",
   },
   {
     "L3MON4D3/LuaSnip",
@@ -12,29 +12,29 @@ return {
   {
     "hrsh7th/nvim-cmp",
     config = function()
-      local cmp = require("cmp")
+      local Cmp = require("cmp")
       require("luasnip.loaders.from_vscode").lazy_load()
 
-      cmp.setup({
+      Cmp.setup({
         snippet = {
-          expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+          expand = function(Args)
+            require("luasnip").lsp_expand(Args.body)
           end,
         },
         window = {
-          completion = cmp.config.window.bordered(),
-          documentation = cmp.config.window.bordered(),
+          completion = Cmp.config.window.bordered(),
+          documentation = Cmp.config.window.bordered(),
         },
-        mapping = cmp.mapping.preset.insert({
-          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-f>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        mapping = Cmp.mapping.preset.insert({
+          ["<C-b>"] = Cmp.mapping.scroll_docs(-4, { desc = "Scroll documentation up" }),
+          ["<C-f>"] = Cmp.mapping.scroll_docs(4, { desc = "Scroll documentation down" }),
+          ["<C-Space>"] = Cmp.mapping.complete({ desc = "Trigger completion menu" }),
+          ["<C-e>"] = Cmp.mapping.abort({ desc = "Abort completion" }),
+          ["<CR>"] = Cmp.mapping.confirm({ select = true, desc = "Confirm completion selection" }),
         }),
-        sources = cmp.config.sources({
+        sources = Cmp.config.sources({
           { name = "nvim_lsp" },
-          { name = "luasnip" }, -- For luasnip users.
+          { name = "luasnip" },
         }, {
           { name = "buffer" },
         }),
@@ -42,3 +42,4 @@ return {
     end,
   },
 }
+

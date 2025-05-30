@@ -21,7 +21,7 @@ return {
         enable_diagnostics = true,
       })
 
-      vim.keymap.set("n", "<C-b>", "<cmd>Neotree toggle<cr>")
+      vim.keymap.set("n", "<C-b>", "<cmd>Neotree toggle<cr>", { desc = "Toggle Neo-tree file explorer" })
     end,
   }
 }

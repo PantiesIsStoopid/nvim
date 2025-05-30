@@ -31,7 +31,6 @@ vim.g.maplocalleader = " "
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
-vim.opt.clipboard = "unnamedplus"
 
 vim.cmd("highlight CursorLineNr guifg=#f5e0dc gui=bold") -- Catppuccin Latte Rosewater
 
