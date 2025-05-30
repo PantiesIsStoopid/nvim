@@ -1,12 +1,11 @@
+-- For `plugins/markview.lua` users.
 return {
-  "iamcco/markdown-preview.nvim",
-  build = "cd app && npm install",
-  ft = { "markdown" },
-  init = function()
-    vim.g.mkdp_filetypes = { "markdown" }
-  end,
+  "OXY2DEV/markview.nvim",
+  lazy = false,
   config = function()
-    vim.keymap.set("n", "<leader>mp", "<cmd>MarkdownPreview<CR>", { desc = "Markdown Preview" })
+    vim.keymap.set("n", "<leader>mp", function()
+      vim.cmd("MarkviewToggle")
+    end, { desc = "Toggle Markview Preview" })
   end,
 }
 
