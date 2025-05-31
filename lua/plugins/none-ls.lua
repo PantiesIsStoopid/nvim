@@ -2,10 +2,10 @@ return {
 	"nvimtools/none-ls.nvim",
 	config = function()
 		local null_ls = require("null-ls")
-		require("lspconfig").texlab.setup({})
 
 		null_ls.setup({
 			sources = {
+				-- Formatters
 				null_ls.builtins.formatting.stylua, -- Lua
 				null_ls.builtins.formatting.prettier, -- HTML, CSS, JS
 				null_ls.builtins.formatting.goimports, -- Go

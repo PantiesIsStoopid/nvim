@@ -20,6 +20,7 @@ return {
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 			local lspconfig = require("lspconfig")
 
+			lspconfig.texlab.setup({})
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,
 			})
@@ -36,9 +37,6 @@ return {
 			lspconfig.rust_analyzer.setup({
 				capabilities = capabilities,
 			})
-      lspconfig.texlab.setup({
-        capabilities = capabilities,
-      })
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Show hover information" })
 			vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "Go to definition" })
