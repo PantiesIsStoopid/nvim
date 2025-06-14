@@ -15,7 +15,7 @@ return {
 			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			{ "j-hui/fidget.nvim", opts = {} },
-			"saghen/blink.cmp",
+			-- "saghen/blink.cmp", -- removed blink.cmp to disable completions
 		},
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -114,28 +114,26 @@ return {
 				},
 			})
 
-			local capabilities = require("blink.cmp").get_lsp_capabilities()
+			local capabilities = {} -- no completion capabilities
 
 			local servers = {
-				clangd = {}, -- C/C++
-				denols = {}, -- TS/JS (Deno)
-				gopls = {}, -- Go
-				jdtls = {}, -- Java
-				kotlin_language_server = {}, -- Kotlin
-				lua_ls = {}, -- Lua
-				marksman = {}, -- Markdown/Makefile
-				omnisharp = {}, -- C#
-				phpactor = {}, -- PHP
-				stylua = {}, -- Lua formatter
-				texlab = {}, -- LaTeX
-				zls = {}, -- Zsh
-				sqls = {}, -- SQL alternative to sqlls
-				-- eslint handled by null-ls
-				-- bashls maybe reinstall or integrate shellcheck via null-ls
-				jsonls = {}, -- JSON LSP
-				cssls = {}, -- CSS LSP
-				html = {}, -- HTML LSP
-				pyright = {}, -- Python LSP, if needed
+				clangd = {},
+				denols = {},
+				gopls = {},
+				jdtls = {},
+				kotlin_language_server = {},
+				lua_ls = {},
+				marksman = {},
+				omnisharp = {},
+				phpactor = {},
+				stylua = {},
+				texlab = {},
+				zls = {},
+				sqls = {},
+				jsonls = {},
+				cssls = {},
+				html = {},
+				pyright = {},
 			}
 
 			local ensure_installed = vim.tbl_keys(servers)
@@ -154,7 +152,7 @@ return {
 					end,
 				},
 			})
-		end, -- <---- THIS IS THE MISSING END, closes the config function
+		end,
 	},
 
 	{
@@ -187,47 +185,6 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 			},
-		},
-	},
-
-	{
-		"saghen/blink.cmp",
-		event = "VimEnter",
-		version = "1.*",
-		dependencies = {
-			{
-				"L3MON4D3/LuaSnip",
-				version = "2.*",
-				build = (function()
-					if vim.fn.has("win32") == 1 or vim.fn.executable("make") == 0 then
-						return
-					end
-					return "make install_jsregexp"
-				end)(),
-				dependencies = {},
-				opts = {},
-			},
-			"folke/lazydev.nvim",
-		},
-		opts = {
-			keymap = {
-				preset = "default",
-			},
-			appearance = {
-				nerd_font_variant = "mono",
-			},
-			completion = {
-				documentation = { auto_show = false, auto_show_delay_ms = 500 },
-			},
-			sources = {
-				default = { "lsp", "path", "snippets", "lazydev" },
-				providers = {
-					lazydev = { module = "lazydev.integrations.blink", score_offset = 100 },
-				},
-			},
-			snippets = { preset = "luasnip" },
-			fuzzy = { implementation = "lua" },
-			signature = { enabled = true },
 		},
 	},
 }
