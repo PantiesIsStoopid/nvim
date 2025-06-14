@@ -32,7 +32,15 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
 
-vim.cmd("highlight CursorLineNr guifg=#f5e0dc gui=bold") -- Catppuccin Latte Rosewater
+-- Set the undo directory and enable persistent undo for Windows
+vim.o.undodir = "C:\\Users\\Nyle\\AppData\\Local\\nvim-data\\undo"
+
+-- Enable persistent undo
+vim.o.undofile = true
+
+-- Optional settings to increase undo levels
+vim.o.undolevels = 1000 -- Increase the number of undo levels
+vim.o.undoreload = 10000 -- Increase the number of lines to keep in memory
 
 local IgnoredCodes = {}
 
