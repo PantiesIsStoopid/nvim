@@ -15,6 +15,14 @@ return {
             file = "",
           },
         },
+        -- Show hidden files
+        filesystem = {
+          filtered_items = {
+            visible = true, -- This will make hidden files visible
+            hide_dotfiles = false,  -- Do not hide dotfiles
+            hide_gitignore = false, -- Show files ignored by Git
+          },
+        },
         close_if_last_window = true,
         popup_border_style = "rounded",
         enable_git_status = true,
