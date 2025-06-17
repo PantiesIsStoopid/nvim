@@ -135,6 +135,7 @@ return {
 				cssls = {},
 				html = {},
 				pyright = {},
+				taplo = {},
 			}
 
 			local ensure_installed = vim.tbl_keys(servers)
@@ -185,6 +186,7 @@ return {
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
+				toml = { "taplo" },
 			},
 		},
 	},
