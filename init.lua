@@ -1,14 +1,38 @@
+-- Basic Vim settings
 vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
 vim.cmd("set autoindent")
-vim.opt.shell = "pwsh"
-vim.opt.shellcmdflag = '-NoLogo -ExecutionPolicy Bypass -Command ". $PROFILE; "'
 
 vim.opt.numberwidth = 1
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.cursorline = true
+vim.o.mouse = ""
 
--- Bootstrap lazy.nvim
+-- Get home directory in a portable way
+local home = vim.loop.os_homedir() or os.getenv("HOME")
+
+-- Undo directory inside the home folder, works for all OSes
+vim.o.undodir = home .. "/.local/share/nvim/undo"
+vim.o.undofile = true
+vim.o.undolevels = 1000
+vim.o.undoreload = 10000
+
+-- Detect OS to set shell accordingly
+if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
+	-- On Windows: Use PowerShell (pwsh)
+	vim.opt.shell = "pwsh"
+	vim.opt.shellcmdflag = '-NoLogo -ExecutionPolicy Bypass -Command ". $PROFILE; "'
+else
+	-- On Unix/Linux/macOS: Use $SHELL environment or fallback to bash
+	local user_shell = os.getenv("SHELL") or "/bin/bash"
+	vim.opt.shell = user_shell
+	vim.opt.shellcmdflag = "-c"
+end
+
+-- Bootstrap lazy.nvim remains unchanged
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -25,6 +49,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Leader keys
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
