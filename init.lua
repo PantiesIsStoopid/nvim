@@ -20,18 +20,6 @@ vim.o.undofile = true
 vim.o.undolevels = 1000
 vim.o.undoreload = 10000
 
--- Detect OS to set shell accordingly
-if vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
-	-- On Windows: Use PowerShell (pwsh)
-	vim.opt.shell = "pwsh"
-	vim.opt.shellcmdflag = '-NoLogo -ExecutionPolicy Bypass -Command ". $PROFILE; "'
-else
-	-- On Unix/Linux/macOS: Use $SHELL environment or fallback to bash
-	local user_shell = os.getenv("SHELL") or "/bin/bash"
-	vim.opt.shell = user_shell
-	vim.opt.shellcmdflag = "-c"
-end
-
 -- Bootstrap lazy.nvim remains unchanged
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
