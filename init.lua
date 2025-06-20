@@ -45,9 +45,6 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
 
--- Set the undo directory and enable persistent undo for Windows
-vim.o.undodir = "C:\\Users\\Nyle\\AppData\\Local\\nvim-data\\undo"
-
 -- Disable the mouse
 vim.o.mouse = ""
 
