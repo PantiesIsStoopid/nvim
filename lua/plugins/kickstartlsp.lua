@@ -25,7 +25,7 @@ return {
 				phpactor = {},
 				texlab = {},
 				zls = {},
-				sqls = {},
+		  	sqlls	 = {},
 				jsonls = {},
 				cssls = {},
 				html = {},
@@ -130,6 +130,11 @@ return {
 			},
 			snippets = { preset = "luasnip" },
 			signature = { enabled = true },
+      fuzzy = {prebuilt_binaries = {
+        force_version = "v1.0.0",
+
+      },
+      implementation = "prefer_rust",}
 		},
 	},
 }
