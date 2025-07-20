@@ -17,7 +17,6 @@ return {
 			local servers = {
 				clangd = {},
 				denols = {},
-				gopls = {},
 				jdtls = {},
 				kotlin_language_server = {},
 				lua_ls = {},
