@@ -5,10 +5,8 @@ return {
 
         nullls.setup({
             sources = { -- Formatting
-            nullls.builtins.formatting.stylua, -- Lua
-            nullls.builtins.formatting.prettier, -- JS, CSS, HTML, etc
-            nullls.builtins.formatting.clang_format -- C, C++
-            }
+            nullls.builtins.formatting.stylua, nullls.builtins.formatting.prettier,
+            nullls.builtins.formatting.clang_format, nullls.builtins.formatting.black}
         })
 
         vim.keymap.set("n", "<leader>qf", function()
