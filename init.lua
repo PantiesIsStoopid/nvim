@@ -46,9 +46,6 @@ vim.opt.rtp:prepend(lazypath)
 -- Setup lazy.nvim
 require("lazy").setup("plugins")
 
--- Load custom keymaps
-require("keymaps")
-
 -- Copy yanks to system clipboard
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
