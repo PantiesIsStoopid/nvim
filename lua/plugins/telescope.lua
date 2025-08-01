@@ -41,7 +41,6 @@ return {
 	},
 	{
 		"nvim-telescope/telescope-ui-select.nvim",
-		lazy = true,
 		dependencies = { "nvim-telescope/telescope.nvim" },
 		config = function()
 			local Telescope = require("telescope")
