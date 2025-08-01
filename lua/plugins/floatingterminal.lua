@@ -34,7 +34,7 @@ end
 
 local function ToggleTerminal()
 	if not vim.api.nvim_win_is_valid(State.floating.win) then
-		State.floating = CreateFloatingWindow { buf = State.floating.buf }
+		State.floating = CreateFloatingWindow({ buf = State.floating.buf })
 		if vim.bo[State.floating.buf].buftype ~= "terminal" then
 			vim.cmd.terminal()
 		end
@@ -46,4 +46,3 @@ end
 vim.api.nvim_create_user_command("Floaterminal", ToggleTerminal, {})
 
 return {}
-
