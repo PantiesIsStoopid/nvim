@@ -14,17 +14,6 @@ require("config.lazy")
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.diagnostic.config({
-	virtual_text = {
-		prefix = "●",
-		source = "if_many",
-		spacing = 1,
-	},
-	signs = true,
-	underline = true,
-	update_in_insert = false,
-})
-
 local disabled_plugins = {
 	"gzip",
 	"zip",
