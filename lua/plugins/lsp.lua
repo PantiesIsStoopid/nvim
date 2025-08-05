@@ -2,6 +2,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
+      { "saghen/blink.cmp" },
       {
         "folke/lazydev.nvim",
         ft = "lua",
@@ -14,34 +15,34 @@ return {
     },
 
     config = function()
+      local Capabilities = require("blink.cmp").get_lsp_capabilities()
       local Lsp = require("lspconfig")
 
-      -- Setup LSP servers
       local Servers = {
         lua_ls = {},
         html = {},
         cssls = {},
-        ts_ls = {}, -- for JS/TS/JSX
+        ts_ls = {},
         jsonls = {},
         pyright = {},
-        clangd = {}, -- for C/C++
+        clangd = {},
         rust_analyzer = {},
         gopls = {},
       }
 
       for Name, Config in pairs(Servers) do
+        Config.capabilities = Capabilities
         Lsp[Name].setup(Config)
       end
 
-      -- Keybinds + formatting on save
       vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local Client = vim.lsp.get_client_by_id(args.data.client_id)
+        callback = function(Args)
+          local Client = vim.lsp.get_client_by_id(Args.data.client_id)
           if not Client then return end
 
-          local Buf = args.buf
-          local Map = function(mode, lhs, rhs)
-            vim.keymap.set(mode, lhs, rhs, { buffer = Buf })
+          local Buf = Args.buf
+          local Map = function(Mode, Lhs, Rhs)
+            vim.keymap.set(Mode, Lhs, Rhs, { buffer = Buf })
           end
 
           Map("n", "K", vim.lsp.buf.hover)
