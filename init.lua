@@ -15,35 +15,34 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 
 vim.diagnostic.config({
-  virtual_text = {
-    prefix = "●",
-    source = "if_many",
-    spacing = 1,
-  },
-  signs = true,
-  underline = true,
-  update_in_insert = false,
+	virtual_text = {
+		prefix = "●",
+		source = "if_many",
+		spacing = 1,
+	},
+	signs = true,
+	underline = true,
+	update_in_insert = false,
 })
 
 local disabled_plugins = {
-  "gzip",
-  "zip",
-  "zipPlugin",
-  "tar",
-  "tarPlugin",
-  "getscript",
-  "getscriptPlugin",
-  "vimball",
-  "vimballPlugin",
-  "matchit",
-  "matchparen",
-  "netrw",
-  "netrwPlugin",
-  "netrwSettings",
-  "netrwFileHandlers",
+	"gzip",
+	"zip",
+	"zipPlugin",
+	"tar",
+	"tarPlugin",
+	"getscript",
+	"getscriptPlugin",
+	"vimball",
+	"vimballPlugin",
+	"matchit",
+	"matchparen",
+	"netrw",
+	"netrwPlugin",
+	"netrwSettings",
+	"netrwFileHandlers",
 }
 
 for _, plugin in ipairs(disabled_plugins) do
-  vim.g["loaded_" .. plugin] = 1
+	vim.g["loaded_" .. plugin] = 1
 end
-
