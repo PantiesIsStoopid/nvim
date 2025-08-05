@@ -2,7 +2,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-
       {
         "folke/lazydev.nvim",
         ft = "lua",
@@ -15,12 +14,30 @@ return {
     },
 
     config = function()
-      require("lspconfig").lua_ls.setup {}
+      local Lsp = require("lspconfig")
 
+      -- Setup LSP servers
+      local Servers = {
+        lua_ls = {},
+        html = {},
+        cssls = {},
+        ts_ls = {}, -- for JS/TS/JSX
+        jsonls = {},
+        pyright = {},
+        clangd = {}, -- for C/C++
+        rust_analyzer = {},
+        gopls = {},
+      }
+
+      for Name, Config in pairs(Servers) do
+        Lsp[Name].setup(Config)
+      end
+
+      -- Keybinds + formatting on save
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if not client then return end
+          local Client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not Client then return end
 
           local Buf = args.buf
           local Map = function(mode, lhs, rhs)
@@ -34,16 +51,16 @@ return {
           Map("n", "<leader>gf", vim.lsp.buf.format)
           Map("n", "<space>rn", vim.lsp.buf.rename)
 
-          if client.supports_method("textDocument/formatting") then
+          if Client.supports_method("textDocument/formatting") then
             vim.api.nvim_create_autocmd("BufWritePre", {
               buffer = Buf,
               callback = function()
-                vim.lsp.buf.format({ bufnr = Buf, id = client.id })
+                vim.lsp.buf.format({ bufnr = Buf, id = Client.id })
               end,
             })
           end
         end,
       })
     end,
-  }
+  },
 }
