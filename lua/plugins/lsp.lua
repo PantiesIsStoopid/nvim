@@ -35,6 +35,13 @@ return {
         Lsp[Name].setup(Config)
       end
 
+      -- Enable inline virtual text errors/warnings
+      vim.diagnostic.config({
+        virtual_text = true,
+        signs = true,
+        underline = true,
+      })
+
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(Args)
           local Client = vim.lsp.get_client_by_id(Args.data.client_id)

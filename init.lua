@@ -36,3 +36,13 @@ local disabled_plugins = {
 for _, plugin in ipairs(disabled_plugins) do
   vim.g["loaded_" .. plugin] = 1
 end
+
+
+vim.keymap.set("n", "<F5>", function()
+  local Makefile = vim.fn.getcwd() .. "/Makefile"
+  if vim.fn.filereadable(Makefile) == 1 then
+    vim.cmd("!make")
+  else
+    print("No Makefile found in current directory.")
+  end
+end, { noremap = true, silent = true })
