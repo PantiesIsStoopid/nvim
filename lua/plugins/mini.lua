@@ -1,0 +1,22 @@
+return {
+  "echasnovski/mini.nvim",
+  config = function()
+    local statusline = require "mini.statusline"
+    statusline.setup {
+      use_icons = true
+    }
+
+    require("mini.pairs").setup({
+      -- basic options
+      mappings = {
+        ["("] = { map = "()" },
+        ["["] = { map = "[]" },
+        ["{"] = { map = "{}" },
+        ['"'] = { map = '""', escape = true },
+        ["'"] = { map = "''", escape = true },
+      },
+      -- disable autopairs in these filetypes
+      disable_filetype = { "TelescopePrompt", "vim" },
+    })
+  end
+}
