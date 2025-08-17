@@ -14,13 +14,11 @@ return {
       require("mason-lspconfig").setup({
         ensure_installed = {
           "clangd",
-          "prettier",
           "rust_analyzer",
           "gopls",
           "pyright",
           "html",
           "cssls",
-          "tsserver",
           "lua_ls",
           "powershell_es",
         },
@@ -42,7 +40,6 @@ return {
         "pyright",
         "html",
         "cssls",
-        "tsserver",
         "lua_ls",
         "powershell_es",
       }
