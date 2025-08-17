@@ -6,16 +6,13 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.clipboard = "unnamedplus"
 
-vim.keymap.set("n", "<space><space>x", "<cmd>source %<CR>")
-
 vim.api.nvim_create_autocmd("TextYankPost", {
-    desc = "Highlight yanked text",
-    callback = function()
-        vim.highlight.on_yank({
-            timeout = 200
-        })
-    end
+	desc = "Highlight yanked text",
+	callback = function()
+		vim.highlight.on_yank({
+			timeout = 200,
+		})
+	end,
 })
 
 require("config.lazy")
-

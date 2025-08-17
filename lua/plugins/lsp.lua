@@ -1,80 +1,142 @@
-return {{
-    "mason-org/mason.nvim",
-    opts = {}
-}, {
-    "neovim/nvim-lspconfig",
-    config = function()
-        local LspConfig = require("lspconfig")
+return {
+	-- Mason for managing LSPs
+	{
+		"williamboman/mason.nvim",
+		cmd = "Mason",
+		config = function()
+			require("mason").setup()
+		end,
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = { "mason.nvim" },
+		config = function()
+			require("mason-lspconfig").setup({
+				ensure_installed = {
+					"clangd",
+					"rust_analyzer",
+					"gopls",
+					"pyright",
+					"html",
+					"cssls",
+					"tsserver",
+					"lua_ls",
+					"powershell_es",
+				},
+			})
+		end,
+	},
 
-        -- Keymap to format buffer manually
-        vim.keymap.set("n", "<leader>qf", vim.lsp.buf.format)
+	-- LSP Config
+	{
+		"neovim/nvim-lspconfig",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = { "mason.nvim", "mason-lspconfig.nvim" },
+		config = function()
+			local nvim_lsp = require("lspconfig")
+			local servers = {
+				"clangd",
+				"rust_analyzer",
+				"gopls",
+				"pyright",
+				"html",
+				"cssls",
+				"tsserver",
+				"lua_ls",
+				"powershell_es",
+			}
 
-        -- Auto-format on save if the client supports formatting
-        vim.api.nvim_create_autocmd("LspAttach", {
-            callback = function(args)
-                local Client = vim.lsp.get_client_by_id(args.data.client_id)
-                if not Client then
-                    return
-                end
+			for _, lsp in ipairs(servers) do
+				nvim_lsp[lsp].setup({
+					on_attach = function(client, bufnr)
+						local opts = { noremap = true, silent = true, buffer = bufnr }
+						vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+						vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+						vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+						vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
 
-                if Client.supports_method("textDocument/formatting") then
-                    vim.api.nvim_create_autocmd("BufWritePre", {
-                        buffer = args.buf,
-                        callback = function()
-                            vim.lsp.buf.format({
-                                async = true,
-                                bufnr = args.buf,
-                                id = Client.id
-                            })
-                        end
-                    })
-                end
-            end
-        })
+						-- Format on save
+						if client.server_capabilities.documentFormattingProvider then
+							vim.api.nvim_create_autocmd("BufWritePre", {
+								group = vim.api.nvim_create_augroup("LspFormat", { clear = true }),
+								buffer = bufnr,
+								callback = function()
+									vim.lsp.buf.format({ async = false })
+								end,
+							})
+						end
+					end,
+					flags = { debounce_text_changes = 150 },
+				})
+			end
 
-        -- Common keymaps for LSP
-        local OnAttach = function(_, BufNr)
-            local Opts = {
-                noremap = true,
-                silent = true,
-                buffer = BufNr
-            }
-            vim.keymap.set("n", "gd", vim.lsp.buf.definition, Opts)
-            vim.keymap.set("n", "K", vim.lsp.buf.hover, Opts)
-            vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, Opts)
-            vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, Opts)
-        end
+			vim.diagnostic.config({
+				virtual_text = false,
+				signs = true,
+				underline = true,
+				update_in_insert = false,
+				severity_sort = true,
+			})
+		end,
+	},
 
-        -- Setup Lua LSP
-        LspConfig.lua_ls.setup({
-            on_attach = OnAttach,
-            settings = {
-                Lua = {
-                    runtime = {
-                        version = "LuaJIT"
-                    },
-                    diagnostics = {
-                        globals = {"vim"}
-                    },
-                    workspace = {
-                        library = {
-                            [vim.fn.stdpath("data") .. "/lazy/lazydev.nvim/luv/library"] = true
-                        }
-                    },
-                    telemetry = {
-                        enable = false
-                    }
-                }
-            }
-        })
-    end
-}, {
-    "folke/lazydev.nvim",
-    ft = "lua",
-    opts = {
-        library = {
-            path = vim.fn.stdpath("data") .. "/lazy/lazydev.nvim/luv/library",
-            words = {"vim%.uv"}
-        }
-    }
-}}
+	-- Completion & Snippets
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"saadparwaiz1/cmp_luasnip",
+			"L3MON4D3/LuaSnip",
+			"onsails/lspkind.nvim",
+		},
+		config = function()
+			local cmp = require("cmp")
+			local luasnip = require("luasnip")
+			local lspkind = require("lspkind")
+
+			cmp.setup({
+				snippet = {
+					expand = function(args)
+						luasnip.lsp_expand(args.body)
+					end,
+				},
+				mapping = {
+					["<Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_next_item()
+						elseif luasnip.expand_or_jumpable() then
+							luasnip.expand_or_jump()
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+					["<S-Tab>"] = cmp.mapping(function(fallback)
+						if cmp.visible() then
+							cmp.select_prev_item()
+						elseif luasnip.jumpable(-1) then
+							luasnip.jump(-1)
+						else
+							fallback()
+						end
+					end, { "i", "s" }),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
+					["<C-Space>"] = cmp.mapping.complete(),
+				},
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp" },
+					{ name = "luasnip" },
+				}, {
+					{ name = "buffer" },
+					{ name = "path" },
+				}),
+				formatting = {
+					format = lspkind.cmp_format({ with_text = true, maxwidth = 50 }),
+				},
+				experimental = { ghost_text = true },
+			})
+		end,
+	},
+}
