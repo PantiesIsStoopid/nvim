@@ -1,10 +1,12 @@
 return {
-	"stevearc/oil.nvim",
-	dependencies = { "nvim-tree/nvim-web-devicons" },
-	config = function()
-		require("oil").setup({
-			use_icons = true,
-		})
-		vim.keymap.set("n", "<C-b>", "<cmd>Oil<CR>", { noremap = true, silent = true })
-	end,
+  'stevearc/oil.nvim',
+  opts = {
+    view_options = {
+      show_hidden = true,
+    },
+    columns = {
+      'icon', -- Enable the icon column
+    },
+  },
+  keys = { { '-', '<CMD>Oil<CR>', desc = 'Open parent directory' } },
 }
