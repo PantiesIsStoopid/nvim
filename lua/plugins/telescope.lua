@@ -6,13 +6,28 @@ return {
     'nvim-telescope/telescope-ui-select.nvim',
     {
       'nvim-telescope/telescope-fzf-native.nvim',
-      build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+      -- Only build if cmake is available (optional, but handy to avoid errors)
+      build = function()
+        if vim.fn.executable 'cmake' == 1 then
+          vim.cmd '!cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release'
+          vim.cmd '!cmake --build build --config Release'
+          vim.cmd '!cmake --install build --prefix build'
+        else
+          print 'cmake not found, skipping telescope-fzf-native build'
+        end
+      end,
     },
   },
   config = function()
     require('telescope').setup {
       extensions = {
         ['ui-select'] = { require('telescope.themes').get_dropdown() },
+        fzf = {
+          fuzzy = true,
+          override_generic_sorter = true,
+          override_file_sorter = true,
+          case_mode = 'smart_case',
+        },
       },
     }
     require('telescope').load_extension 'ui-select'
