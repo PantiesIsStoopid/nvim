@@ -14,12 +14,11 @@ return {
   -- Main LSP Configuration
   {
     'neovim/nvim-lspconfig',
-    event = 'LspAttach',
     dependencies = {
-      { 'mason-org/mason.nvim', event = 'LspAttach', opts = {} },
-      { 'mason-org/mason-lspconfig.nvim', event = 'LspAttach' },
-      { 'WhoIsSethDaniel/mason-tool-installer.nvim', event = 'LspAttach' },
-      { 'j-hui/fidget.nvim', event = 'LspAttach', opts = {} },
+      { 'mason-org/mason.nvim', opts = {} },
+      { 'mason-org/mason-lspconfig.nvim' },
+      { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
+      { 'j-hui/fidget.nvim', opts = {} },
       {
         'saghen/blink.cmp',
         event = 'InsertEnter',
