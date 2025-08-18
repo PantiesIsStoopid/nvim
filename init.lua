@@ -1,9 +1,13 @@
--- Core Vim settings
+-----------------------------------------------------------
+-- Core Vim Settings
+-----------------------------------------------------------
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
--- Editor behavior
+-----------------------------------------------------------
+-- Editor Behaviour
+-----------------------------------------------------------
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
@@ -23,11 +27,28 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 vim.opt.confirm = true
 
--- Disable netrw
+-----------------------------------------------------------
+-- Indentation
+-----------------------------------------------------------
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.softtabstop = 2
+vim.opt.smartindent = true
+vim.opt.shiftround = true
+
+-----------------------------------------------------------
+-- Disable Netrw
+-----------------------------------------------------------
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-----------------------------------------------------------
+-- Plugin Manager (Lazy)
+-----------------------------------------------------------
 require 'config.lazy'
 
+-----------------------------------------------------------
 -- Basic Keymaps
+-----------------------------------------------------------
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
