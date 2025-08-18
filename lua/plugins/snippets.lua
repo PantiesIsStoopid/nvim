@@ -1,82 +1,81 @@
 return {
-  -- Add blink.cmp plugin for autocompletion
-  {
-    'saghen/blink.cmp', -- Replace this with the actual plugin URL if necessary
-    dependencies = {
-      'hrsh7th/nvim-cmp', -- Dependency for the completion engine
-      'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
-      'hrsh7th/cmp-buffer', -- Buffer source for nvim-cmp
-      'hrsh7th/cmp-path', -- Path source for nvim-cmp
-      'hrsh7th/cmp-vsnip', -- Snippet source for nvim-cmp
-    },
-    config = function()
-      -- Ensure completion is configured with blink.cmp capabilities
-      require('cmp').setup {
-        completion = {
-          completeopt = 'menu,menuone,noinsert',
-        },
-        snippet = {
-          expand = function(args)
-            vim.fn['vsnip#anonymous'](args.body) -- For using vsnip snippets
+  -- Autocompletion
+  'saghen/blink.cmp',
+  event = 'VimEnter',
+  version = '1.*',
+  dependencies = {
+    -- Snippet Engine
+    {
+      'L3MON4D3/LuaSnip',
+      version = '2.*',
+      build = (function()
+        if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+          return
+        end
+        return 'make install_jsregexp'
+      end)(),
+      dependencies = {
+        {
+          'rafamadriz/friendly-snippets',
+          config = function()
+            require('luasnip.loaders.from_vscode').lazy_load()
           end,
         },
-        mapping = {
-          ['<C-n>'] = require('cmp').mapping.select_next_item(),
-          ['<C-p>'] = require('cmp').mapping.select_prev_item(),
-          ['<C-d>'] = require('cmp').mapping.scroll_docs(-4),
-          ['<C-u>'] = require('cmp').mapping.scroll_docs(4),
-          ['<C-Space>'] = require('cmp').mapping.complete(),
-          ['<C-e>'] = require('cmp').mapping.close(),
-          ['<CR>'] = require('cmp').mapping.confirm { select = true },
-        },
-        sources = {
-          { name = 'nvim_lsp' }, -- Source for LSP-based completion
-          { name = 'vsnip' }, -- If you're using vsnip for snippets
-          { name = 'buffer' }, -- Buffer-based completion
-          { name = 'path' }, -- Path completion
-        },
-      }
+      },
+      opts = {},
+    },
+    'folke/lazydev.nvim',
+  },
+  --- @module 'blink.cmp'
+  --- @type blink.cmp.Config
+  opts = {
+    keymap = {
+      ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+      ['<C-e>'] = { 'hide', 'fallback' },
 
-      -- Set capabilities for LSP to include snippet support
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
+      ['<Tab>'] = {
+        function(cmp)
+          if cmp.snippet_active() then
+            return cmp.accept()
+          else
+            return cmp.select_and_accept()
+          end
+        end,
+        'snippet_forward',
+        'fallback',
+      },
+      ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
 
-      -- Hook up the LSP servers with blink.cmp capabilities
-      local on_attach = function(client, bufnr)
-        -- Add completion capabilities to the client
-        client.resolved_capabilities.textDocument.completion.completionItem.snippetSupport = true
-        client.capabilities = vim.tbl_deep_extend('force', client.capabilities, capabilities)
-      end
+      ['<Up>'] = { 'select_prev', 'fallback' },
+      ['<Down>'] = { 'select_next', 'fallback' },
+      ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+      ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
 
-      local lsp_servers = {
-        'clangd',
-        'gopls',
-        'pyright',
-        'rust_analyzer',
-        'lua-language-server',
-        'html',
-        'cssls',
-        'typescript-language-server',
-        'dockerfile-language-server',
-        'taplo',
-        'bashls',
-        'cmake',
-        'deno',
-        'docker_language_server',
-        'fish_lsp',
-        'gh_actions_ls',
-        'grammarly',
-        'java_language_server',
-        'jsonls',
-        'rubocop',
-        'ruby-lsp',
-        'prettier',
-      }
+      ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+      ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
 
-      -- Apply the `on_attach` to all LSP servers (this will hook the completion capabilities)
-      require('lspconfig').clangd.setup { on_attach = on_attach }
-      require('lspconfig').pyright.setup { on_attach = on_attach }
-      require('lspconfig').rust_analyzer.setup { on_attach = on_attach }
-      -- Add more LSP servers here as necessary
-    end,
+      ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+    },
+
+    appearance = {
+      nerd_font_variant = 'mono', -- Adjust for Nerd Font Mono
+    },
+
+    completion = {
+      documentation = { auto_show = false, auto_show_delay_ms = 500 },
+    },
+
+    sources = {
+      default = { 'lsp', 'path', 'snippets', 'lazydev' },
+      providers = {
+        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+      },
+    },
+
+    snippets = { preset = 'luasnip' },
+
+    fuzzy = { implementation = 'lua' },
+
+    signature = { enabled = true },
   },
 }
