@@ -1,6 +1,6 @@
 -- LSP Plugins
 return {
-  -- Lua LSP support
+  -- Lua library support
   {
     'folke/lazydev.nvim',
     ft = 'lua',
@@ -14,12 +14,39 @@ return {
   -- Main LSP Configuration
   {
     'neovim/nvim-lspconfig',
+    event = 'LspAttach',
     dependencies = {
-      { 'mason-org/mason.nvim', opts = {} },
-      'mason-org/mason-lspconfig.nvim',
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-      { 'j-hui/fidget.nvim', opts = {} },
-      'saghen/blink.cmp',
+      { 'mason-org/mason.nvim', event = 'LspAttach', opts = {} },
+      { 'mason-org/mason-lspconfig.nvim', event = 'LspAttach' },
+      { 'WhoIsSethDaniel/mason-tool-installer.nvim', event = 'LspAttach' },
+      { 'j-hui/fidget.nvim', event = 'LspAttach', opts = {} },
+      {
+        'saghen/blink.cmp',
+        event = 'InsertEnter',
+        version = '1.*',
+        dependencies = {
+          {
+            'L3MON4D3/LuaSnip',
+            version = '2.*',
+            build = (function()
+              if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+                return
+              end
+              return 'make install_jsregexp'
+            end)(),
+            dependencies = {
+              {
+                'rafamadriz/friendly-snippets',
+                config = function()
+                  require('luasnip.loaders.from_vscode').lazy_load()
+                end,
+              },
+            },
+            opts = {},
+          },
+          'folke/lazydev.nvim',
+        },
+      },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {

@@ -1,7 +1,7 @@
 return {
   -- Autocompletion
   'saghen/blink.cmp',
-  event = 'VimEnter',
+  event = 'InsertEnter', -- lazy-load when entering insert mode
   version = '1.*',
   dependencies = {
     -- Snippet Engine
@@ -26,13 +26,10 @@ return {
     },
     'folke/lazydev.nvim',
   },
-  --- @module 'blink.cmp'
-  --- @type blink.cmp.Config
   opts = {
     keymap = {
       ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
       ['<C-e>'] = { 'hide', 'fallback' },
-
       ['<Tab>'] = {
         function(cmp)
           if cmp.snippet_active() then
@@ -45,37 +42,22 @@ return {
         'fallback',
       },
       ['<S-Tab>'] = { 'snippet_backward', 'fallback' },
-
       ['<Up>'] = { 'select_prev', 'fallback' },
       ['<Down>'] = { 'select_next', 'fallback' },
       ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
       ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
-
       ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
       ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
-
       ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
     },
-
-    appearance = {
-      nerd_font_variant = 'mono', -- Adjust for Nerd Font Mono
-    },
-
-    completion = {
-      documentation = { auto_show = false, auto_show_delay_ms = 500 },
-    },
-
+    appearance = { nerd_font_variant = 'mono' },
+    completion = { documentation = { auto_show = false, auto_show_delay_ms = 500 } },
     sources = {
       default = { 'lsp', 'path', 'snippets', 'lazydev' },
-      providers = {
-        lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
-      },
+      providers = { lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 } },
     },
-
     snippets = { preset = 'luasnip' },
-
     fuzzy = { implementation = 'lua' },
-
     signature = { enabled = true },
   },
 }
