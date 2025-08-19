@@ -1,4 +1,18 @@
--- LSP Plugins
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+local servers = {
+  clangd = {},
+  gopls = {},
+  pyright = {},
+  rust_analyzer = {},
+  lua_ls = {},
+  ts_ls = {},
+}
+
+local ensure_installed = vim.tbl_keys(servers or {})
+vim.list_extend(ensure_installed, { 'stylua', 'clang-format', 'gofumpt', 'black', 'rustfmt', 'prettierd' })
+
 return {
   -- Lua library support
   {
@@ -19,33 +33,7 @@ return {
       { 'mason-org/mason-lspconfig.nvim' },
       { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
       { 'j-hui/fidget.nvim', opts = {} },
-      {
-        'saghen/blink.cmp',
-        event = 'InsertEnter',
-        version = '1.*',
-        dependencies = {
-          {
-            'L3MON4D3/LuaSnip',
-            version = '2.*',
-            build = (function()
-              if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-                return
-              end
-              return 'make install_jsregexp'
-            end)(),
-            dependencies = {
-              {
-                'rafamadriz/friendly-snippets',
-                config = function()
-                  require('luasnip.loaders.from_vscode').lazy_load()
-                end,
-              },
-            },
-            opts = {},
-          },
-          'folke/lazydev.nvim',
-        },
-      },
+      { 'folke/lazydev.nvim' },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -56,6 +44,7 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
+          map('K', vim.lsp.buf.hover, 'Hover Documentation')
           map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
           map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
           map('grr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -83,18 +72,6 @@ return {
         virtual_text = { source = 'if_many', spacing = 2 },
       }
 
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
-      local servers = {
-        clangd = {},
-        gopls = {},
-        pyright = {},
-        rust_analyzer = {},
-        lua_ls = {},
-        ts_ls = {},
-      }
-
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, { 'stylua', 'clang-format', 'gofumpt', 'black', 'rustfmt', 'prettierd' })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {

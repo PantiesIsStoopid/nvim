@@ -33,9 +33,6 @@ require('lazy').setup {
         vim.cmd 'colorscheme onedark'
       end,
     },
-    {
-      'nvim-tree/nvim-web-devicons',
-    },
   },
 
   -- Automatically check for updates

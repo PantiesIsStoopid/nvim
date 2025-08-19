@@ -5,12 +5,15 @@ return {
     'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope-ui-select.nvim',
     { 'nvim-telescope/telescope-fzy-native.nvim' },
+    'echasnovski/mini.icons',
   },
   config = function()
     local telescope = require 'telescope'
+    local icons = require 'mini.icons'
 
     telescope.setup {
       defaults = {
+        -- Using diagnostic icons as UI replacements
         prompt_prefix = '🔍 ',
         selection_caret = ' ',
         path_display = { 'smart' },
@@ -29,8 +32,8 @@ return {
 
     -- Keymaps
     local opts = { noremap = true, silent = true }
-    vim.keymap.set('n', '<leader>ff', telescope.extensions.fzy_native and '<cmd>Telescope find_files<cr>' or '<cmd>Telescope find_files<cr>', opts)
-    vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
+    vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
     vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', opts)
     vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', opts)
   end,
