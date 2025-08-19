@@ -12,8 +12,9 @@ return {
 		local Comment = require("mini.comment")
 
 		-- Mini Comment keymaps
-		vim.keymap.set("n", "<Leader>/", function()
-			Comment.comment_line()
+		vim.keymap.set("n", "<Leader>/", Comment.comment_line)
+		vim.keymap.set("v", "<Leader>/", function()
+			Comment.comment_lines()
 		end)
 	end,
 }

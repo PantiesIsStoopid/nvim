@@ -1,6 +1,6 @@
 return {
 	"lewis6991/gitsigns.nvim",
-	event = { "BufReadPre", "BufNewFile" },
+	event = "BufReadPre", -- or just BufNewFile
 	opts = {
 		current_line_blame = true,
 		signs = {
