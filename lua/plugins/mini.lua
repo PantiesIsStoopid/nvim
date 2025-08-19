@@ -7,16 +7,13 @@ return {
 		require("mini.comment").setup()
 		require("mini.completion").setup()
 		require("mini.snippets").setup()
-		require("mini.diff").setup()
 		require("mini.git").setup()
-		require("mini.animate").setup({
-			cursor = { enable = false },
-			scroll = {
-				enable = true,
-			},
-			resize = { enable = false },
-			open = { enable = false },
-			close = { enable = false },
-		})
+
+		local Comment = require("mini.comment")
+
+		-- Mini Comment keymaps
+		vim.keymap.set("n", "<Leader>/", function()
+			Comment.comment_line()
+		end)
 	end,
 }
