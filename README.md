@@ -61,7 +61,7 @@ These are the plugins included in your configuration:
 
 **Commenting**
 
-- `<leader>/` – Comment or uncomment the current line or in visual mode the selection
+- `gcc` – Comment or uncomment the current line or in visual mode the selection
 
 **Oil (Directory Navigation)**
 
