@@ -93,3 +93,21 @@ These are the plugins included in your configuration:
 - `:DiffviewOpen` / `:DiffviewClose` – Open/close Diffview
 - `:LspInfo` – Show LSP server info
 - `:LspRestart` – Restart LSP server
+
+---
+
+## Window Management
+
+**Splits**
+
+- `<leader>sv` – Open a vertical split
+- `<leader>sh` – Open a horizontal split
+
+**Move Between Windows**
+
+- `<C-h>` – Move to left window
+- `<C-j>` – Move to bottom window
+- `<C-k>` – Move to top window
+- `<C-l>` – Move to right window
+
+---
