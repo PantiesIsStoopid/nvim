@@ -65,3 +65,4 @@ vim.g.loaded_netrwFileHandlers = 1
 -- Plugin Manager (Lazy)
 -----------------------------------------------------------
 require("config.lazy")
+require("config.keybinds")

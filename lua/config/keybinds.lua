@@ -7,3 +7,5 @@ vim.keymap.set("n", "<C-h>", "<C-w>h") -- Move to left window
 vim.keymap.set("n", "<C-j>", "<C-w>j") -- Move to bottom window
 vim.keymap.set("n", "<C-k>", "<C-w>k") -- Move to top window
 vim.keymap.set("n", "<C-l>", "<C-w>l") -- Move to right window
+
+vim.keymap.set("i", "jk", "<Esc>", { noremap = true, silent = true })
