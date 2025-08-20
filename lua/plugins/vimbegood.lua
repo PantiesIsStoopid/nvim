@@ -1,1 +1,4 @@
-return { "ThePrimeagen/vim-be-good" }
+return {
+	lazy = true,
+	"ThePrimeagen/vim-be-good",
+}
