@@ -23,6 +23,7 @@ These are the plugins included in your configuration:
 
 - Gitsigns – Git integration
 - Diffview – Git diffs
+- LazyGit - Open LazyGit
 
 **Appearance**
 
