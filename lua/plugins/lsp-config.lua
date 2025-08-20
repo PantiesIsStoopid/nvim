@@ -11,7 +11,14 @@ local servers = {
 }
 
 local ensure_installed = vim.tbl_keys(servers or {})
-vim.list_extend(ensure_installed, { "stylua", "clang-format", "gofumpt", "black", "rustfmt", "prettierd" })
+vim.list_extend(ensure_installed, {
+	"stylua",
+	"clang-format",
+	"gofumpt",
+	"black",
+	"rustfmt",
+	"prettierd",
+})
 
 return {
 	-- Lua library support
