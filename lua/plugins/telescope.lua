@@ -1,42 +1,30 @@
 return {
 	"nvim-telescope/telescope.nvim",
+	event = "VimEnter",
 	branch = "0.1.x",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"nvim-telescope/telescope-ui-select.nvim",
-
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
-			build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+			build = "make",
+			cond = function()
+				return vim.fn.executable("make") == 1
+			end,
 		},
+		{ "nvim-telescope/telescope-ui-select.nvim" },
+		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
 	},
 	config = function()
-		local telescope = require("telescope")
-		local sorters = require("telescope.sorters")
-
-		telescope.setup({
-			defaults = {
-				prompt_prefix = "🔍 ",
-				selection_caret = " ",
-				path_display = { "smart" },
-				file_sorter = sorters.get_fuzzy_file,
-				generic_sorter = sorters.get_generic_fuzzy_sorter,
-			},
+		require("telescope").setup({
 			extensions = {
 				["ui-select"] = {
 					require("telescope.themes").get_dropdown(),
 				},
-				fzf = {
-					fuzzy = true,
-					override_generic_sorter = true,
-					override_file_sorter = true,
-					case_mode = "smart_case",
-				},
 			},
 		})
 
-		telescope.load_extension("ui-select")
-		telescope.load_extension("fzf")
+		pcall(require("telescope").load_extension, "fzf")
+		pcall(require("telescope").load_extension, "ui-select")
 
 		local opts = { noremap = true, silent = true }
 		vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
