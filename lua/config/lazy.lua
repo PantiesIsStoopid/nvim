@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.loop or vim.uv).fs_stat(lazypath) then
+if not vim.loop.fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
 	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
 	if vim.v.shell_error ~= 0 then
@@ -14,11 +14,11 @@ if not (vim.loop or vim.uv).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Set mapleader BEFORE loading lazy.nvim
+-- Leader keys before loading plugins
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- Setup lazy.nvim with plugin specs
+-- Lazy.nvim setup
 require("lazy").setup({
 	spec = {
 		{ import = "plugins" },
@@ -30,18 +30,9 @@ require("lazy").setup({
 				vim.cmd("colorscheme onedark")
 			end,
 		},
-		{ "nvim-tree/nvim-web-devicons" },
 	},
 
-	checker = {
-		enabled = true, -- keep checking enabled
-	},
-
-	install = {
-		missing = true, -- auto-install missing plugins
-	},
-
-	defaults = {
-		version = "*", -- always use newest tagged release
-	},
+	checker = { enabled = true },
+	install = { missing = true },
+	defaults = { version = "*" },
 })
