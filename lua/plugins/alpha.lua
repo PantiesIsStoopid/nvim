@@ -29,10 +29,6 @@ return {
 		}
 		-- Buttons
 		Dashboard.section.buttons.val = {
-			Dashboard.button("f", "  Find File", ":Telescope find_files <CR>"),
-			Dashboard.button("n", "  New File", ":ene <BAR> startinsert <CR>"),
-			Dashboard.button("r", "  Recent Files", ":Telescope oldfiles <CR>"),
-			Dashboard.button("g", "  Git Status", ":LazyGit <CR>"),
 			Dashboard.button("q", "󰈆  Quit", ":qa<CR>"),
 		}
 
