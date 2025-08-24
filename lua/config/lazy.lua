@@ -21,22 +21,26 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim with plugin specs
 require("lazy").setup({
 	spec = {
-		-- Import plugins from 'plugins' directory
 		{ import = "plugins" },
-
-		-- Direct plugin specs can go here
 		{
 			"olimorris/onedarkpro.nvim",
-			priority = 1000, -- Load before other plugins
+			priority = 1000,
 			config = function()
 				vim.cmd("colorscheme onedark")
 			end,
 		},
-		{
-			"nvim-tree/nvim-web-devicons",
-		},
+		{ "nvim-tree/nvim-web-devicons" },
 	},
 
-	-- Automatically check for updates
-	checker = { enabled = true },
+	checker = {
+		enabled = true, -- keep checking enabled
+	},
+
+	install = {
+		missing = true, -- auto-install missing plugins
+	},
+
+	defaults = {
+		version = "*", -- always use newest tagged release
+	},
 })
