@@ -1,7 +1,7 @@
 return {
 	"obsidian-nvim/obsidian.nvim",
 	enabled = false,
-  version = "*", -- recommended
+	version = "*", -- recommended
 	ft = "markdown",
 	opts = {
 		workspaces = {
