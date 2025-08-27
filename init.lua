@@ -7,7 +7,7 @@ vim.g.have_nerd_font = true
 ---@diagnostic disable-next-line: undefined-field
 vim.g.startup_time = vim.loop.hrtime()
 
------------------------------------------------------------
+-----------------------------------------------------------init
 -- Editor Behaviour
 -----------------------------------------------------------
 vim.opt.number = true
@@ -28,6 +28,7 @@ vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 vim.opt.confirm = true
+vim.opt.termguicolors = true
 
 -----------------------------------------------------------
 -- Indentation
