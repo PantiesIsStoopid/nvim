@@ -1,7 +1,14 @@
 return {
 	"hrsh7th/nvim-cmp",
+	event = "InsertEnter",
 	dependencies = {
-		"L3MON4D3/LuaSnip",
+		{
+			"L3MON4D3/LuaSnip",
+			lazy = true,
+			config = function()
+				require("luasnip.loaders.from_vscode").lazy_load()
+			end,
+		},
 		"saadparwaiz1/cmp_luasnip",
 		"rafamadriz/friendly-snippets",
 		"hrsh7th/cmp-nvim-lsp",
@@ -9,8 +16,6 @@ return {
 	config = function()
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
-
-		require("luasnip.loaders.from_vscode").lazy_load()
 
 		cmp.setup({
 			snippet = {
@@ -55,28 +60,23 @@ return {
 			}),
 		})
 
-		-- === Universal Float Styling ===
+		-- Apply float styling immediately
 		local Border = "rounded"
 
 		vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = Border })
+		vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = Border })
+		vim.diagnostic.config({ float = { border = Border } })
 
-		vim.lsp.handlers["textDocument/signatureHelp"] =
-			vim.lsp.with(vim.lsp.handlers.signature_help, { border = Border })
-
-		vim.diagnostic.config({
-			float = { border = Border },
-		})
-
-		local OrigUtilOpenFloatingPreview = vim.lsp.util.open_floating_preview
-		function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+		local Orig = vim.lsp.util.open_floating_preview
+		vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
 			opts = opts or {}
 			opts.border = opts.border or Border
-			return OrigUtilOpenFloatingPreview(contents, syntax, opts, ...)
+			return Orig(contents, syntax, opts, ...)
 		end
 
 		vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#282c34" })
-		vim.api.nvim_set_hl(0, "CmpBorder", { fg = "#ffffff", bg = "#282c34" })
-		vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#ffffff", bg = "#282c34" })
+		vim.api.nvim_set_hl(0, "CmpBorder", { fg = "#c678dd", bg = "#282c34" })
+		vim.api.nvim_set_hl(0, "FloatBorder", { fg = "#c678dd", bg = "#282c34" })
 		vim.api.nvim_set_hl(0, "Pmenu", { bg = "#282c34" })
 		vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#3e4452" })
 		vim.api.nvim_set_hl(0, "PmenuBorder", { bg = "#282c34", fg = "#282c34" })
