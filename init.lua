@@ -29,7 +29,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 vim.opt.confirm = true
 vim.opt.termguicolors = true
-
+vim.opt.shell = "pwsh"
 -----------------------------------------------------------
 -- Indentation
 -----------------------------------------------------------
@@ -67,33 +67,34 @@ vim.g.loaded_netrwFileHandlers = 1
 -----------------------------------------------------------
 require("config.lazy")
 require("config.keybinds")
+require("config.floatingterminal")
 
 -- Run code with F5 based on filetype
 vim.keymap.set("n", "<F5>", function()
-	local ft = vim.bo.filetype
-	local file = vim.fn.expand("%:p")
-	local cmd = ""
+  local ft = vim.bo.filetype
+  local file = vim.fn.expand("%:p")
+  local cmd = ""
 
-	if ft == "python" then
-		cmd = "python " .. file
-	elseif ft == "cpp" then
-		local exe = vim.fn.expand("%:r") .. ".exe"
-		cmd = "g++ -std=c++17 -O2 -Wall " .. file .. " -o " .. exe .. " && " .. exe
-	elseif ft == "c" then
-		local exe = vim.fn.expand("%:r") .. ".exe"
-		cmd = "gcc -O2 -Wall " .. file .. " -o " .. exe .. " && " .. exe
-	elseif ft == "rust" then
-		cmd = "cargo run"
-	elseif ft == "go" then
-		cmd = "go run " .. file
-	elseif ft == "javascript" then
-		cmd = "node " .. file
-	elseif ft == "typescript" then
-		cmd = "ts-node " .. file
-	else
-		print("No run command set for filetype: " .. ft)
-		return
-	end
+  if ft == "python" then
+    cmd = "python " .. file
+  elseif ft == "cpp" then
+    local exe = vim.fn.expand("%:r") .. ".exe"
+    cmd = "g++ -std=c++17 -O2 -Wall " .. file .. " -o " .. exe .. " && " .. exe
+  elseif ft == "c" then
+    local exe = vim.fn.expand("%:r") .. ".exe"
+    cmd = "gcc -O2 -Wall " .. file .. " -o " .. exe .. " && " .. exe
+  elseif ft == "rust" then
+    cmd = "cargo run"
+  elseif ft == "go" then
+    cmd = "go run " .. file
+  elseif ft == "javascript" then
+    cmd = "node " .. file
+  elseif ft == "typescript" then
+    cmd = "ts-node " .. file
+  else
+    print("No run command set for filetype: " .. ft)
+    return
+  end
 
-	vim.cmd("split | terminal " .. cmd)
+  vim.cmd("split | terminal " .. cmd)
 end, { desc = "Run code" })
