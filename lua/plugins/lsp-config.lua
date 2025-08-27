@@ -1,100 +1,56 @@
--- LSP Setup
 return {
-	"neovim/nvim-lspconfig",
-	dependencies = {
+	{
 		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
-		"j-hui/fidget.nvim",
+		config = function()
+			require("mason").setup()
+		end,
 	},
-	config = function()
-		local lspconfig = require("lspconfig")
-		local mason = require("mason")
-		local mason_lsp = require("mason-lspconfig")
-		local fidget = require("fidget")
+	{
+		"williamboman/mason-lspconfig.nvim",
+		config = function()
+			require("mason-lspconfig").setup({
+				ensure_installed = { "lua_ls", "ts_ls", "rust_analyzer", "clangd", "pyright" },
+			})
+		end,
+	},
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		config = function()
+			require("mason-tool-installer").setup({
+				ensure_installed = { "stylua", "prettier", "rustfmt", "clang-format", "black", "isort" },
+				auto_update = true,
+			})
+		end,
+	},
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			local Capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local Lspconfig = require("lspconfig")
+			local Servers = { "lua_ls", "ts_ls", "rust_analyzer", "clangd", "jsonls", "pyright" }
 
-		-- Mason Setup
-		mason.setup()
-		mason_lsp.setup({
-			ensure_installed = { "clangd", "gopls", "pyright", "rust_analyzer", "lua_ls" },
-		})
+			for _, Server in ipairs(Servers) do
+				Lspconfig[Server].setup({ capabilities = Capabilities })
+			end
 
-		-- Fidget Setup
-		fidget.setup({})
-
-		-- Capabilities for snippets and completion
-		local Capabilities = vim.lsp.protocol.make_client_capabilities()
-		Capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-		-- Keybindings for LSP
-		local OnAttach = function(Client, Buffer)
-			local opts = { noremap = true, silent = true, buffer = Buffer }
-
-			vim.keymap.set(
-				"n",
-				"gd",
-				"<cmd>lua vim.lsp.buf.definition()<CR>",
-				{ desc = "Go to definition", unpack(opts) }
-			)
-			vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { desc = "Hover documentation", unpack(opts) })
-			vim.keymap.set(
-				"n",
-				"gr",
-				"<cmd>lua vim.lsp.buf.references()<CR>",
-				{ desc = "List references", unpack(opts) }
-			)
-			vim.keymap.set(
-				"n",
-				"gi",
-				"<cmd>lua vim.lsp.buf.implementation()<CR>",
-				{ desc = "Go to implementation", unpack(opts) }
-			)
-			vim.keymap.set(
-				"n",
-				"<leader>rn",
-				"<cmd>lua vim.lsp.buf.rename()<CR>",
-				{ desc = "Rename symbol", unpack(opts) }
-			)
-			vim.keymap.set(
-				"n",
-				"<leader>ca",
-				"<cmd>lua vim.lsp.buf.code_action()<CR>",
-				{ desc = "Code action", unpack(opts) }
-			)
-			vim.keymap.set(
-				"n",
-				"[d",
-				"<cmd>lua vim.diagnostic.goto_prev()<CR>",
-				{ desc = "Prev diagnostic", unpack(opts) }
-			)
-			vim.keymap.set(
-				"n",
-				"]d",
-				"<cmd>lua vim.diagnostic.goto_next()<CR>",
-				{ desc = "Next diagnostic", unpack(opts) }
-			)
-			vim.keymap.set(
-				"n",
-				"<leader>dl",
-				"<cmd>lua vim.diagnostic.setloclist()<CR>",
-				{ desc = "Diagnostic list", unpack(opts) }
-			)
-
-			-- Inline diagnostics
 			vim.diagnostic.config({
 				virtual_text = { prefix = "●", spacing = 2 },
 				signs = true,
+				update_in_insert = true,
 				underline = true,
-				update_in_insert = false,
+				severity_sort = true,
 			})
-		end
 
-		-- LSP Servers Setup
-		local Servers = { "clangd", "gopls", "pyright", "rust_analyzer", "lua_ls" }
-		for _, Server in ipairs(Servers) do
-			lspconfig[Server].setup({
-				on_attach = OnAttach,
-				capabilities = Capabilities,
-			})
-		end
-	end,
+			local Keymaps = {
+				{ "n", "K", vim.lsp.buf.hover, "LSP Hover" },
+				{ "n", "gd", vim.lsp.buf.definition, "Go to Definition" },
+				{ "n", "<leader>rn", vim.lsp.buf.rename, "Rename" },
+				{ "n", "<leader>f", vim.lsp.buf.format, "Format Document" },
+				{ "n", "<leader>ca", vim.lsp.buf.code_action, "Code Action" },
+			}
+			for _, M in ipairs(Keymaps) do
+				vim.keymap.set(M[1], M[2], M[3], { desc = M[4] })
+			end
+		end,
+	},
 }

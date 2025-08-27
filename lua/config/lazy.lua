@@ -22,7 +22,6 @@ vim.g.maplocalleader = "\\"
 require("lazy").setup({
 	spec = {
 		{ import = "plugins" },
-		{ import = "plugins.Languages" },
 		{
 			"olimorris/onedarkpro.nvim",
 			priority = 1000,
