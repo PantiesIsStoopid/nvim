@@ -1,43 +1,34 @@
 return {
-	"nvim-telescope/telescope.nvim",
-	branch = "0.1.x",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		{
-			"nvim-telescope/telescope-fzf-native.nvim",
-			build = "make",
-			cond = function()
-				return vim.fn.executable("make") == 1
-			end,
-		},
-		{ "nvim-telescope/telescope-ui-select.nvim" },
-		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
-	},
-	config = function()
-		require("telescope").setup({
-			extensions = {
-				["ui-select"] = {
-					require("telescope.themes").get_dropdown(),
-				},
-			},
-		})
+  "nvim-telescope/telescope.nvim",
+  branch = "0.1.x",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+      cond = function()
+        return vim.fn.executable("make") == 1
+      end,
+    },
+    { "nvim-telescope/telescope-ui-select.nvim" },
+    { "nvim-tree/nvim-web-devicons",            enabled = vim.g.have_nerd_font },
+  },
+  config = function()
+    require("telescope").setup({
+      extensions = {
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown(),
+        },
+      },
+    })
 
-		pcall(require("telescope").load_extension, "fzf")
-		pcall(require("telescope").load_extension, "ui-select")
+    pcall(require("telescope").load_extension, "fzf")
+    pcall(require("telescope").load_extension, "ui-select")
 
-		local opts = { noremap = true, silent = true }
-		vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
-		vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
-		vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", opts)
-		vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
-
-		-- Float & border highlights for Telescope
-		vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "#282c34" })
-		vim.api.nvim_set_hl(0, "TelescopeBorder", { fg = "#c678dd", bg = "#282c34" })
-		vim.api.nvim_set_hl(0, "TelescopePromptNormal", { bg = "#282c34" })
-		vim.api.nvim_set_hl(0, "TelescopePromptBorder", { fg = "#c678dd", bg = "#282c34" })
-		vim.api.nvim_set_hl(0, "TelescopePromptTitle", { fg = "#c678dd", bg = "#3e4452" })
-		vim.api.nvim_set_hl(0, "TelescopePreviewTitle", { fg = "#c678dd", bg = "#3e4452" })
-		vim.api.nvim_set_hl(0, "TelescopeResultsTitle", { fg = "#c678dd", bg = "#282c34" })
-	end,
+    local opts = { noremap = true, silent = true }
+    vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
+    vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
+    vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", opts)
+    vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", opts)
+  end,
 }
