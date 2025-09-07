@@ -65,27 +65,27 @@ vim.opt.shell = "pwsh"
 -- Disable Built-in Plugins
 -- =========================
 local disabled_plugins = {
-  "gzip",
-  "tar",
-  "tarPlugin",
-  "zip",
-  "zipPlugin",
-  "getscript",
-  "getscriptPlugin",
-  "vimball",
-  "vimballPlugin",
-  "matchit",
-  "2html_plugin",
-  "logiPat",
-  "rrhelper",
-  "netrw",
-  "netrwPlugin",
-  "netrwSettings",
-  "netrwFileHandlers",
+	"gzip",
+	"tar",
+	"tarPlugin",
+	"zip",
+	"zipPlugin",
+	"getscript",
+	"getscriptPlugin",
+	"vimball",
+	"vimballPlugin",
+	"matchit",
+	"2html_plugin",
+	"logiPat",
+	"rrhelper",
+	"netrw",
+	"netrwPlugin",
+	"netrwSettings",
+	"netrwFileHandlers",
 }
 
 for _, plugin in ipairs(disabled_plugins) do
-  vim.g["loaded_" .. plugin] = 1
+	vim.g["loaded_" .. plugin] = 1
 end
 
 -- =========================
