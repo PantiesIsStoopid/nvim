@@ -27,6 +27,10 @@ require("lazy").setup({
 			priority = 1000,
 			config = function()
 				vim.cmd("colorscheme onedark")
+       vim.cmd[[hi Normal guibg=NONE ctermbg=NONE]]
+       vim.cmd[[hi LineNr guibg=NONE ctermbg=NONE]]
+       vim.cmd[[hi NormalNC guibg=NONE ctermbg=NONE]]
+       vim.cmd[[hi SignColumn guibg=NONE ctermbg=NONE]]
 			end,
 		},
 	},
