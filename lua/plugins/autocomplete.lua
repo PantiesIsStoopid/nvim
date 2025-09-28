@@ -16,7 +16,6 @@ return {
       documentation = { auto_show = true, window = { border = "rounded" } },
       menu = {
         border = "rounded",
-        winblend = 10, -- slight transparency
       },
     },
 
