@@ -1,6 +1,5 @@
 return {
 	"rcarriga/nvim-notify",
-	lazy = true,
 	-- lazy-load on first use of vim.notify
 	init = function()
 		vim.notify = function(...)
