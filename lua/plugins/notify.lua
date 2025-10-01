@@ -3,6 +3,7 @@ return {
 	-- lazy-load on first use of vim.notify
 	init = function()
 		vim.notify = function(...)
+			---@diagnostic disable-next-line: missing-fields
 			require("notify").setup({
 				background_colour = "#282c34",
 				stages = "slide",
