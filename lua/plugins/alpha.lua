@@ -22,9 +22,9 @@ return {
 
 		-- Buttons
 		Dashboard.section.buttons.val = {
-			Dashboard.button("f", "󰱼  Find File", ":Telescope find_files<CR>"),
-			Dashboard.button("r", "  Recent Files", ":Telescope oldfiles<CR>"),
-			Dashboard.button("s", "  Search Text", ":Telescope live_grep<CR>"),
+			Dashboard.button("sh", "󰱼  Find File", ":Telescope find_files<CR>"),
+			Dashboard.button("s.", "  Recent Files", ":Telescope oldfiles<CR>"),
+			Dashboard.button("sg", "  Search Text", ":Telescope live_grep<CR>"),
 			Dashboard.button("c", "  Configuration", ":e $MYVIMRC<CR>"),
 			Dashboard.button("l", "󰒲  Lazy Update", ":Lazy update<CR>"),
 			Dashboard.button("q", "󰈆  Quit", ":qa<CR>"),
