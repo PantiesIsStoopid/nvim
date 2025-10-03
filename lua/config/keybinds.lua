@@ -1,5 +1,5 @@
-vim.keymap.set("n", "<leader>sv", ":vsplit<CR>") -- Vertical split
-vim.keymap.set("n", "<leader>sh", ":split<CR>") -- Horizontal split
+vim.keymap.set("n", "<leader>wv", ":vsplit<CR>", { desc = "Open [W]indow [V]ertically" }) -- Vertical split
+vim.keymap.set("n", "<leader>wh", ":split<CR>", { desc = "Open [W]indow [H]orizontally" }) -- Horizontal split
 vim.keymap.set("n", "<C-h>", "<C-w>h") -- Move left
 vim.keymap.set("n", "<C-l>", "<C-w>l") -- Move right
 
