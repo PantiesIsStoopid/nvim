@@ -1,5 +1,6 @@
 return {
 	"goolord/alpha-nvim",
+
 	dependencies = { "nvim-telescope/telescope.nvim" },
 	config = function()
 		local Alpha = require("alpha")
