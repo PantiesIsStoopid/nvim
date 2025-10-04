@@ -44,7 +44,6 @@ vim.opt.inccommand = "split"
 vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
-vim.opt.confirm = true
 
 -- =========================
 -- Tabs & Indentation

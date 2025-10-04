@@ -13,7 +13,6 @@ return {
 			columns = {
 				"icon", -- Enable the icon column
 			},
-			delete_to_trash = true,
 			float = { padding = 2, max_width = 80, max_height = 20, border = "rounded" },
 		},
 		vim.keymap.set("n", "-", function()
