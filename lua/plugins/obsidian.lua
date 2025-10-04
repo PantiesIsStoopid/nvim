@@ -14,7 +14,6 @@ return {
 	---@type obsidian.config
 	opts = {
 		legacy_commands = false,
-		ignore_conceal_warn = true,
 		workspaces = {
 			{
 				name = "Notes",

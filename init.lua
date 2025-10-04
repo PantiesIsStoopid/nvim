@@ -56,6 +56,7 @@ vim.opt.softtabstop = 2
 vim.opt.smartindent = true
 vim.opt.shiftround = true
 
+vim.o.conceallevel = 1
 -- =========================
 -- Shell
 -- =========================
