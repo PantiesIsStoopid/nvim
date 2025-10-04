@@ -1,12 +1,10 @@
 return { -- Autocompletion
 	"saghen/blink.cmp",
-	event = "InsertEnter",
 	version = "1.*",
 	dependencies = {
 		-- Snippet Engine
 		{
 			"L3MON4D3/LuaSnip",
-			event = "InsertEnter",
 			version = "2.*",
 			build = (function()
 				-- Build Step is needed for regex support in snippets.
@@ -23,7 +21,6 @@ return { -- Autocompletion
 				--    https://github.com/rafamadriz/friendly-snippets
 				{
 					"rafamadriz/friendly-snippets",
-					event = "InsertEnter",
 					config = function()
 						require("luasnip.loaders.from_vscode").lazy_load()
 					end,

@@ -23,6 +23,7 @@ return {
 			-- Useful status updates for LSP.
 			{
 				"j-hui/fidget.nvim",
+				event = "LspAttach",
 				config = true,
 			},
 		},
