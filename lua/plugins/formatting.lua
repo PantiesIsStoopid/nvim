@@ -1,4 +1,4 @@
-return { -- Autoformat
+return {
 	"stevearc/conform.nvim",
 	event = { "BufWritePre" },
 	cmd = { "ConformInfo" },
@@ -29,9 +29,31 @@ return { -- Autoformat
 			lua = { "stylua" },
 			c = { "clang-format" },
 			cpp = { "clang-format" },
-			go = { "gofmt" }, -- or "goimports" if you prefer
-			python = { "isort", "black" }, -- runs isort first, then black
-			rust = { "rustfmt" },
+			arduino = { "clang-format" },
+			cmake = { "cmake-format" },
+			css = { "prettier" },
+			dockerfile = { "hadolint" },
+			go = { "goimports" },
+			html = { "prettier" },
+			json = { "prettier" },
+			java = { "google-java-format" },
+			javascript = { "prettier" },
+			typescript = { "prettier" },
+			jq = {}, -- no formatter
+			julia = { "JuliaFormatter" },
+			kotlin = { "ktlint" },
+			yaml = { "prettier" },
+			toml = { "taplo" },
+			latex = { "latexindent" },
+			lua = { "stylua" },
+			make = {}, -- no formatter
+			markdown = { "prettier" },
+			matlab = { "matlab-language-server" },
+			mermaid = { "mmdc" },
+			php = { "php-cs-fixer" },
+			powershell = { "powershell-formatter" },
+			python = { "isort", "black" },
+			zsh = { "shfmt" },
 		},
 	},
 }
