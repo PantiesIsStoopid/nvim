@@ -20,5 +20,6 @@ return {
 				path = "~/Desktop/Notes/",
 			},
 		},
+		disable_frontmatter = true,
 	},
 }
