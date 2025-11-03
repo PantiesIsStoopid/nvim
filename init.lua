@@ -95,3 +95,6 @@ require("config.lazy")
 require("config.keybinds")
 require("config.floatingterminal")
 require("config.f5run")
+
+
+
