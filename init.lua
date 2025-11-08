@@ -54,6 +54,7 @@ vim.opt.expandtab = true
 vim.opt.softtabstop = 2
 vim.opt.smartindent = true
 vim.opt.shiftround = true
+vim.loader.enable()
 
 vim.o.conceallevel = 1
 -- =========================
@@ -93,8 +94,3 @@ end
 -- =========================
 require("config.lazy")
 require("config.keybinds")
-require("config.floatingterminal")
-require("config.f5run")
-
-
-
