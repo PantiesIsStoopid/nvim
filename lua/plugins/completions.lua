@@ -19,8 +19,7 @@ require("blink.cmp").setup({
         },
     },
     fuzzy = {
-        -- Force Lua implementation to remove Rust/build warnings
-        implementation = "lua",
-    },
+        implementation = "lua"
+    }
 })
 
