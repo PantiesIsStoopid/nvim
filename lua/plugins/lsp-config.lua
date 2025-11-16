@@ -1,4 +1,5 @@
 return {
+
 	-- Basic settings
 	{
 		"neovim/nvim-lspconfig",
@@ -14,6 +15,8 @@ return {
 					},
 				},
 			})
+
+
 
 			require("lspconfig").pyright.setup({})
 			require("lspconfig").clangd.setup({})
